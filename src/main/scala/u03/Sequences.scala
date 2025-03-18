@@ -88,28 +88,47 @@ object Sequences: // Essentially, generic linkedlists
      * E.g., [30, 20, 10] => 10
      * E.g., [10, 1, 30] => 1
      */
-    def min(s: Sequence[Int]): Optional[Int] = ???
+    def min(s: Sequence[Int]): Optional[Int] = s match
+      case Cons(h, t) => min(t) match
+        case Just(m) if m < h => Just(m)
+        case _ => Just(h)
+      case Nil() => Empty()
+//    def min(s: Sequence[Int]): Optional[Int] =
+//      @tailrec
+//      def _min(seq: Sequence[Int], min: Int): Int = seq match
+//        case Cons(h, t) => _min(t, if (h < min) h else min)
+//        case Nil() => min
+//      s match
+//        case Cons(h, t) => Just(_min(t, h))
+//        case Nil() => Empty()
 
     /*
      * Get the elements at even indices
      * E.g., [10, 20, 30] => [10, 30]
      * E.g., [10, 20, 30, 40] => [10, 30]
      */
-    def evenIndices[A](s: Sequence[A]): Sequence[A] = ???
+    def evenIndices[A](s: Sequence[A]): Sequence[A] = s match
+      case Cons(h, t) => Cons(h, evenIndices(skip(t)(1)))
+      case _ => Nil()
 
     /*
      * Check if the sequence contains the element
      * E.g., [10, 20, 30] => true if elem is 20
      * E.g., [10, 20, 30] => false if elem is 40
      */
-    def contains[A](s: Sequence[A])(elem: A): Boolean = ???
+    @tailrec
+    def contains[A](s: Sequence[A])(elem: A): Boolean = s match
+      case Cons(h, t) => h.==(elem) || contains(t)(elem)
+      case _ => false
 
     /*
      * Remove duplicates from the sequence
      * E.g., [10, 20, 10, 30] => [10, 20, 30]
      * E.g., [10, 20, 30] => [10, 20, 30]
      */
-    def distinct[A](s: Sequence[A]): Sequence[A] = ???
+    def distinct[A](s: Sequence[A]): Sequence[A] = s match
+      case Cons(h, t) => Cons(h, distinct(filter(t)(_ != h)))
+      case _ => Nil()
 
     /*
      * Group contiguous elements in the sequence
@@ -117,7 +136,8 @@ object Sequences: // Essentially, generic linkedlists
      * E.g., [10, 20, 30] => [[10], [20], [30]]
      * E.g., [10, 20, 20, 30] => [[10], [20, 20], [30]]
      */
-    def group[A](s: Sequence[A]): Sequence[Sequence[A]] = ???
+    def group[A](s: Sequence[A]): Sequence[Sequence[A]] = s match
+      case Cons(h, t) => 
 
     /*
      * Partition the sequence into two sequences based on the predicate
