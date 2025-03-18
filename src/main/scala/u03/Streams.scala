@@ -1,5 +1,7 @@
 package u03
 
+import scala.annotation.tailrec
+
 object Streams extends App:
 
   import Sequences.*
@@ -53,7 +55,12 @@ object Streams extends App:
       case n if n > 0 => cons(k, fill(n-1)(k))
       case _ => Empty()
 
-    val fibonacci : Stream [Int ] = ???
+    val fibonacci: Stream[Int] =
+      def fib(a: Int, b: Int): Stream[Int] =
+        cons(a, fib(b, a + b))
+      fib(0, 1)
+
+    def cycle [A]( lst : Sequence [ A ]) : Stream [ A ] = ???
 
   end Stream
 end Streams
