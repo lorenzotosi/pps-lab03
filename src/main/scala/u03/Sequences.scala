@@ -137,14 +137,24 @@ object Sequences: // Essentially, generic linkedlists
      * E.g., [10, 20, 20, 30] => [[10], [20, 20], [30]]
      */
     def group[A](s: Sequence[A]): Sequence[Sequence[A]] = s match
-      case Cons(h, t) => 
+      case Nil() => Nil()
+      case Cons(h, t) =>
+        def helper(s: Sequence[A]): (Sequence[A], Sequence[A]) = s match
+          case Cons(x, xs) if x == h =>
+            val (pref, rest) = helper(xs)
+            (Cons(x, pref), rest)
+          case _ => (Nil(), s)
+        val (pref, rest) = helper(t)
+        val grp = Cons(h, pref)
+        Cons(grp, group(rest))
 
     /*
-     * Partition the sequence into two sequences based on the predicate
-     * E.g., [10, 20, 30] => ([10], [20, 30]) if pred is (_ < 20)
-     * E.g., [11, 20, 31] => ([20], [11, 31]) if pred is (_ % 2 == 0)
-     */
-    def partition[A](s: Sequence[A])(pred: A => Boolean): (Sequence[A], Sequence[A]) = ???
+       * Partition the sequence into two sequences based on the predicate
+       * E.g., [10, 20, 30] => ([10], [20, 30]) if pred is (_ < 20)
+       * E.g., [11, 20, 31] => ([20], [11, 31]) if pred is (_ % 2 == 0)
+       */
+    def partition[A](s: Sequence[A])(pred: A => Boolean): (Sequence[A], Sequence[A]) =
+      (filter(s)(pred), filter(s)(!pred(_)))
 
   end Sequence
 end Sequences
