@@ -22,6 +22,6 @@ object Exercise:
   //courses list, and finally apply foldLeft to sum up these counts.
   def getNumberOfCourses(s: Sequence[Person]): Int =
     foldLeft(map(filter(s)(Teacher => true)) {// le graffe le suggerisce di metterle intellij
-      case Teacher(_, c) => c.length
+      case Teacher(_, c) => 1
       case _ => 0
     })(0)(_ + _)
