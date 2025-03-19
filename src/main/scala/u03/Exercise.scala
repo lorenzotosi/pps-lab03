@@ -92,3 +92,7 @@ object Exercise:
     def fib(a: Int, b: Int): u03.Streams.Stream[Int] =
       cons(a, fib(b, a + b))
     fib(0, 1)
+
+  def cycle[A](lst: Sequence[A]): u03.Streams.Stream[A] = lst match
+    case Sequence.Cons(h, t) => cons(h, cycle(Sequence.concat(t, Sequence.Cons(h, Sequence.Nil()))))
+    case _ => empty()

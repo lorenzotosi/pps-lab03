@@ -60,11 +60,9 @@ object Streams extends App:
         cons(a, fib(b, a + b))
       fib(0, 1)
 
-    def cycle[A](lst: Sequence[A]): Stream[A] =
-      def loop(remaining: Sequence[A]): Stream[A] = remaining match
-        case Sequence.Cons(head, tail) => cons(head, loop(tail))
-        case _ => loop(lst)
-      loop(lst)
+    def cycle[A](lst: Sequence[A]): Stream[A] = lst match
+      case Sequence.Cons(h, t) => cons(h, cycle(Sequence.concat(t, Sequence.Cons(h, Sequence.Nil()))))
+      case _ => empty()
 
 
   end Stream
