@@ -20,7 +20,7 @@ class ExerciseTest:
     assertEquals(210, foldLeft[Int](lst)(2)(_ * _))
 
   @Test def testNumberOfCourses(): Unit =
-    val list = Cons(Teacher("pippo", "a"), Cons(Student("paolo", 2023), Cons(Teacher("pluto", "b"), Nil())))
-    assertEquals(2, getNumberOfCourses(list))
+    val list = Cons(Teacher("pippo", "abc"), Cons(Student("paolo", 2023), Cons(Teacher("pluto", "b"), Cons(Teacher("paolo", "2023"),Nil()))))
+    assertEquals(3, getNumberOfCourses(list))
     val list1 = Cons(Student("paolo", 2023), Nil())
     assertEquals(0, getNumberOfCourses(list1))
