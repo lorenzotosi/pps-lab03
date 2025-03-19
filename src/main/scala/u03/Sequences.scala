@@ -139,12 +139,12 @@ object Sequences: // Essentially, generic linkedlists
     def group[A](s: Sequence[A]): Sequence[Sequence[A]] = s match
       case Nil() => Nil()
       case Cons(h, t) =>
-        def helper(s: Sequence[A]): (Sequence[A], Sequence[A]) = s match
+        def _helper(s: Sequence[A]): (Sequence[A], Sequence[A]) = s match
           case Cons(x, xs) if x == h =>
-            val (pref, rest) = helper(xs)
+            val (pref, rest) = _helper(xs)
             (Cons(x, pref), rest)
           case _ => (Nil(), s)
-        val (pref, rest) = helper(t)
+        val (pref, rest) = _helper(t)
         val grp = Cons(h, pref)
         Cons(grp, group(rest))
 

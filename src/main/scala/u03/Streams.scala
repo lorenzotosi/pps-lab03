@@ -53,14 +53,19 @@ object Streams extends App:
 
     def fill[A](n: Int)(k: A): Stream[A] = n match
       case n if n > 0 => cons(k, fill(n-1)(k))
-      case _ => Empty()
+      case _ => empty()
 
     val fibonacci: Stream[Int] =
       def fib(a: Int, b: Int): Stream[Int] =
         cons(a, fib(b, a + b))
       fib(0, 1)
 
-    def cycle [A]( lst : Sequence [ A ]) : Stream [ A ] = ???
+    def cycle[A](lst: Sequence[A]): Stream[A] =
+      def loop(remaining: Sequence[A]): Stream[A] = remaining match
+        case Sequence.Cons(head, tail) => cons(head, loop(tail))
+        case _ => loop(lst)
+      loop(lst)
+
 
   end Stream
 end Streams

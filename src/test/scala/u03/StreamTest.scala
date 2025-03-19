@@ -35,4 +35,9 @@ class StreamTest:
     val f = Stream.toList(Stream.take(fibonacci)(5))
     assertEquals(f, Cons (0 , Cons (1 , Cons (1 , Cons (2 , Cons (3 , Nil ()))))))
 
+  @Test def testCycle(): Unit =
+    val repeat = cycle(Cons("a", Cons("b", Cons("c", Nil()))))
+    assertEquals(Stream.toList(Stream.take(repeat)(5)),
+      Cons("a", Cons ("b", Cons ("c", Cons ("a", Cons ("b", Nil ()))))))
+
 end StreamTest
