@@ -16,12 +16,13 @@ class Exercise2Test:
   @Test def testGetCourses(): Unit =
     val list = Cons(Teacher("pippo", "a"), Cons(Student("paolo", 2023), Cons(Teacher("pluto", "b"), Nil())))
     assertEquals(Cons("a", Cons("b", Nil())), getCoursesOfTeacher(list))
+    assertEquals(Nil(), getCoursesOfTeacher(Cons(Student("paolo", 2023),Nil())))
 
   @Test def testFoldLeft(): Unit =
     val lst = Cons(3, Cons(7, Cons(1, Cons(5, Nil()))))
-    assertEquals(-16, foldLeft[Int](lst)(0)(_ - _))
-    assertEquals(20, foldLeft[Int](lst)(4)(_ + _))
-    assertEquals(210, foldLeft[Int](lst)(2)(_ * _))
+    assertEquals(-16, foldLeft[Int, Int](lst)(0)(_ - _))
+    assertEquals(20, foldLeft[Int, Int](lst)(4)(_ + _))
+    assertEquals(210, foldLeft[Int, Int](lst)(2)(_ * _))
 
   @Test def testNumberOfCourses(): Unit =
     val list = Cons(Teacher("pippo", "abc"), Cons(Student("paolo", 2023), Cons(Teacher("pluto", "b"), Cons(Teacher("paolo", "2023"),Nil()))))

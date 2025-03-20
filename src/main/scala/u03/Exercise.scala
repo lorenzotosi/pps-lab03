@@ -76,8 +76,8 @@ object Task2:
     case _ => Nil())
 
   @tailrec
-  def foldLeft[A](s: Sequence[A])(n: A)(fun: (A, A) => A): A = s match
-    case Cons(h, t) => foldLeft(t)(fun(n,h))(fun)
+  def foldLeft[A, B](s: Sequence[A])(n: B)(fun: (B, A) => B): B = s match
+    case Cons(h, t) => foldLeft(t)(fun(n, h))(fun)
     case _ => n
 
   def getNumberOfCourses(s: Sequence[Person]): Int =
