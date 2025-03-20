@@ -10,7 +10,6 @@ import scala.annotation.tailrec
 object Exercise:
   import Sequences.*
   import Sequence.*
-  import u02.Modules.Person.*
 //TASK 1
   @tailrec
   def skip[A](s: Sequence[A])(n: Int): Sequence[A] = (s, n) match
@@ -67,7 +66,11 @@ object Exercise:
   def partition[A](s: Sequence[A])(pred: A => Boolean): (Sequence[A], Sequence[A]) =
     (filter(s)(pred), filter(s)(!pred(_)))
 
-  //TASK 2
+//TASK 2
+object Task2:
+  import Sequences.*
+  import Sequence.*
+  import u02.Modules.Person.*
   def getCoursesOfTeacher(s: Sequence[Person]) : Sequence[String] = flatMap(s)(v => v match
     case Teacher(_, c) => Cons(c, Nil())
     case _ => Nil())
@@ -83,16 +86,21 @@ object Exercise:
       case _ => 0
     })(0)(_ + _)
 
-  //TASK 3
-  def fill[A](n: Int)(k: A): u03.Streams.Stream[A] = n match
-    case n if n > 0 => cons(k, fill(n - 1)(k))
-    case _ => u03.Streams.Stream.empty()
+//TASK 3
+object Task3:
+  import Sequences.*
+  import Sequence.*
+  import u03.Streams.*
 
-  val fibonacci: u03.Streams.Stream[Int] =
-    def fib(a: Int, b: Int): u03.Streams.Stream[Int] =
+  def fill[A](n: Int)(k: A): Stream[A] = n match
+    case n if n > 0 => cons(k, fill(n - 1)(k))
+    case _ => empty()
+
+  val fibonacci: Stream[Int] =
+    def fib(a: Int, b: Int): Stream[Int] =
       cons(a, fib(b, a + b))
     fib(0, 1)
 
-  def cycle[A](lst: Sequence[A]): u03.Streams.Stream[A] = lst match
-    case Sequence.Cons(h, t) => cons(h, cycle(Sequence.concat(t, Sequence.Cons(h, Sequence.Nil()))))
+  def cycle[A](lst: Sequence[A]): Stream[A] = lst match
+    case Cons(h, t) => cons(h, cycle(concat(t, Cons(h, Nil()))))
     case _ => empty()
