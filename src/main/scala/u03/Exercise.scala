@@ -81,16 +81,21 @@ object Task2:
     case _ => n
 
   def getNumberOfCourses(s: Sequence[Person]): Int =
-    foldLeft(map(filter(s)(Teacher => true)) {// le graffe le suggerisce di metterle intellij
-      case Teacher(_, c) => 1
-      case _ => 0
-    })(0)(_ + _)
+    foldLeft(map(getCoursesOfTeacher(s))(x => 1))(0)(_ + _)
+
+  def getNumberOfCoursesVariant(s: Sequence[Person]): Int =
+    foldLeft(map(filter(s) {
+      case Teacher(_, _) => true
+      case _ => false
+    })(x => 1))(0)(_ + _)
 
 //TASK 3
 object Task3:
   import Sequences.*
   import Sequence.*
   import u03.Streams.*
+
+  //l'implementazione di takeWhile e interleave era gia fornita.
 
   def fill[A](n: Int)(k: A): Stream[A] = n match
     case n if n > 0 => cons(k, fill(n - 1)(k))
